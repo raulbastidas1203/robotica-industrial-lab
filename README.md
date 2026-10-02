@@ -1,6 +1,6 @@
 # Robótica Industrial · Laboratorio
 
-Ultima modificacion: 2026-10-02 10:42:35 -05
+Ultima modificacion: 2026-10-02 11:00:31 -05
 
 Web de aprendizaje basada en los materiales originales de las semanas 2 a 5.
 
@@ -55,6 +55,8 @@ Los botones abren los archivos desde este repositorio en MATLAB Online; requiere
 
 `matlab/simular_scara.m` es una simulación adicional de base MATLAB con controles y animación; no requiere Robotics ni Symbolic Math Toolbox. Es un archivo distinto de los cuadernos originales. No se ha ejecutado en MATLAB durante el desarrollo de la web.
 
+`matlab/validar_modelos.m` permite comprobar en MATLAB base 21 poses de referencia y sus jacobianos. La web incluye un botón para abrirlo. Su ejecución en MATLAB real sigue pendiente.
+
 La función compartida `matlab/DHL.m` es compatible con la convención numérica del curso. Para un original que no incluya su propia función DHL, desde la raíz del repositorio:
 
 ```matlab
@@ -73,4 +75,4 @@ La orientación de SCARA se recalcula para cada rama inversa: theta4 = yaw - the
 
 ## Comprobaciones
 
-Las pruebas independientes verifican posición analítica de SCARA, reconstrucción de ambas ramas inversas, objetivos inválidos, ortonormalidad y jacobianos lineales/angular mediante diferencias finitas. Esto no sustituye una comparación ejecutada con MATLAB ni una revisión del profesor.
+Las 13 pruebas verifican 21 poses obtenidas directamente de los `.mlx` por una implementación independiente en Python, 560 reconstrucciones de ambas ramas SCARA, límites y singularidades, jacobianos por diferencias finitas, Euler ZYX con bloqueo de cardán, ciclos completos de animación e integridad de los doce originales. `python3 scripts/course_reference.py` regenera la referencia. Los detalles están en `REVISION_ASTRA.md`. Esto no sustituye una comparación ejecutada con MATLAB ni una revisión del profesor.

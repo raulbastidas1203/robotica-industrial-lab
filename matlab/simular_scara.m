@@ -21,6 +21,7 @@ btn=uicontrol(fig,'Style','pushbutton','Units','normalized','Position',[0.70 0.2
     'String','Animar / Pausar','FontSize',11);
 setappdata(fig,'axes',ax);setappdata(fig,'sliders',sliders);setappdata(fig,'labels',labels);
 setappdata(fig,'readout',readout);setappdata(fig,'playing',false);
+setappdata(fig,'phase',0);setappdata(fig,'animating',false);
 for k=1:4
     set(sliders(k),'Callback',@(~,~) manualUpdate(fig));
 end
@@ -49,7 +50,7 @@ quiver3(ax,P(1,end),P(2,end),P(3,end),50*T(1,1),50*T(2,1),50*T(3,1),0, ...
 grid(ax,'on');axis(ax,'equal');xlim(ax,[-450 450]);ylim(ax,[-450 450]);zlim(ax,[-170 100]);
 xlabel(ax,'X [mm]');ylabel(ax,'Y [mm]');zlabel(ax,'Z [mm]');view(ax,45,28);
 title(ax,'SCARA T3-401S: cinematica directa');
-labels=getappdata(fig,'labels');names={'theta1','theta2','d3','theta4'};
+labels=getappdata(fig,'labels');names={'theta1 [deg]','theta2 [deg]','d3 [mm]','theta4 [deg]'};
 for k=1:4,set(labels(k),'String',sprintf('%s = %.1f',names{k},q(k)));end
 set(getappdata(fig,'readout'),'String',sprintf('X = %.2f mm\nY = %.2f mm\nZ = %.2f mm\nGiro Z = %.2f deg',P(:,end),q(1)+q(2)+q(4)));
 drawnow;
@@ -57,9 +58,16 @@ end
 
 function animateScara(fig)
 if getappdata(fig,'playing'),setappdata(fig,'playing',false);return;end
-setappdata(fig,'playing',true);clock=tic;
+setappdata(fig,'playing',true);
+if getappdata(fig,'animating'),return;end
+setappdata(fig,'animating',true);
+cleanup=onCleanup(@() finishAnimation(fig)); %#ok<NASGU>
+clock=tic;previous=0;
 while isgraphics(fig) && getappdata(fig,'playing')
-    a=toc(clock)*0.55;x=235+65*cos(a);y=70+65*sin(a);
+    current=toc(clock);
+    a=getappdata(fig,'phase')+min(current-previous,0.1)*0.55;
+    previous=current;setappdata(fig,'phase',a);
+    x=235+65*cos(a);y=70+65*sin(a);
     c2=(x*x+y*y-225^2-175^2)/(2*225*175);
     t2=atan2(sqrt(max(0,1-c2*c2)),c2);
     t1=atan2(y,x)-atan2(175*sin(t2),225+175*cos(t2));
@@ -67,4 +75,8 @@ while isgraphics(fig) && getappdata(fig,'playing')
     sliders=getappdata(fig,'sliders');for k=1:4,set(sliders(k),'Value',q(k));end
     drawScara(fig);pause(0.03);
 end
+end
+
+function finishAnimation(fig)
+if isgraphics(fig),setappdata(fig,'animating',false);setappdata(fig,'playing',false);end
 end

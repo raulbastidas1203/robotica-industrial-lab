@@ -1,7 +1,7 @@
 import React,{useEffect,useRef,useState} from 'react';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {forward,robots,rad} from './kinematics';
+import {forward,robots} from './kinematics';
 
 const vector=(p,offset)=>new THREE.Vector3(p[0],p[2]+offset,-p[1]);
 export default function RobotScene({robot,q,showFrames,showWorkspace,resetCamera}) {
@@ -26,7 +26,7 @@ export default function RobotScene({robot,q,showFrames,showWorkspace,resetCamera
     return()=>{cancelAnimationFrame(frame);observer.disconnect();controls.dispose();scene.traverse(o=>{o.geometry?.dispose();if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){m.map?.dispose();m.dispose();}}});renderer.dispose();renderer.domElement.remove();engine.current=null;};
   },[]);
   useEffect(()=>{
-    if(!engine.current)return;const {camera,controls}=engine.current,s=robots[robot].scale;
+    if(!engine.current)return;const {camera,controls}=engine.current;
     const points=forward(robot,q).points.map(p=>vector(p,robot==='scara'?200:0));
     points.push(new THREE.Vector3(0,0,0));
     const bounds=new THREE.Box3().setFromPoints(points),center=bounds.getCenter(new THREE.Vector3()),radius=bounds.getSize(new THREE.Vector3()).length()/2+60;
@@ -50,7 +50,8 @@ export default function RobotScene({robot,q,showFrames,showWorkspace,resetCamera
     // Tool orientation is visible even when consecutive DH origins coincide.
     const tip=ps.at(-1),R=frames.at(-1),direction=vector([R[0][0]*55,R[1][0]*55,R[2][0]*55],0);
     group.add(new THREE.ArrowHelper(direction.clone().normalize(),tip,55,0xf8b366,15,8));
-    addCylinder(tip,tip.clone().add(new THREE.Vector3(0,-25,0)),8,'#f3a75d');
+    // The decorative tool stem follows local -Z, including wrist rotations.
+    addCylinder(tip,tip.clone().add(vector([-R[0][2]*25,-R[1][2]*25,-R[2][2]*25],0)),8,'#f3a75d');
     if(showFrames){
       frames.forEach((T,i)=>{const origin=ps[i],length=robot==='scara'?55:80;
         ['#fa797d','#63dbb2','#6bafff'].forEach((color,j)=>{const d=vector([T[0][j],T[1][j],T[2][j]],0);group.add(new THREE.ArrowHelper(d,origin,length,color,12,6));});
