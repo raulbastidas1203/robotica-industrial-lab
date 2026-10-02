@@ -1,0 +1,141 @@
+[
+  {
+    "id": "semana2/Agilus_C4.mlx",
+    "week": 2,
+    "name": "Agilus_C4.mlx",
+    "path": "materiales/semana2/Agilus_C4.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n\n%%% Longitudes_Eslabones %%%\n\nL1 = 330;\nL2 = 290;\nL3 = 20;\nL4 = 310;\nL5 = 75;\n\n\n%%% Valores_Articulares %%%\n\ntheta1 = input('Ingrese valor de theta1: ')\ntheta2 = input('Ingrese valor de theta2: ')\ntheta3 = input('Ingrese valor de theta3: ')\ntheta4 = input('Ingrese valor de theta4: ')\ntheta5 = input('Ingrese valor de theta5: ')\ntheta6 = input('Ingrese valor de theta6: ')\n\ntheta1 = deg2rad(theta1);\ntheta2 = deg2rad(theta2);\ntheta3 = deg2rad(theta3);\ntheta4 = deg2rad(theta4);\ntheta5 = deg2rad(theta5);\ntheta6 = deg2rad(theta6);\n\n%%% Algoritmo_DH %%%\n\nM01 = DHL(-theta1,L1,0,-90);\nM12 = DHL(theta2,0,L2,0);\nM23 = DHL(theta3 - pi/2,0,L3,90);\nM34 = DHL(theta4,-L4,0,-90);\nM45 = DHL(theta5,0,0,90);\nM56 = DHL(theta6+pi,-L5,0,180);\n\nM06 = M01*M12*M23*M34*M45*M56\nrad2deg(tform2eul(M06))\n\n% %%% Posición %%%\n% \n% P = [M06(1,4)\n%      M06(2,4)\n%      M06(3,4)]\n% \n% %%% Orientación %%%\n% \n% Orie = rad2deg(tform2eul(M06))\n% %%% MTH_Root(Robot)_Base %%%\n% Mrb = [1 0 0  13.64\n%        0 1 0 -450.66\n%        0 0 1  359.14\n%        0 0 0    1  ];\n% \n% Mb_br = (inv(Mrb))*M06\n% \n% angulosb_br = rad2deg(tform2eul(Mb_br))\n% %%%% Cinemática_Inversa %%%%%%%%%%%%\n% \n% theta11 = atan2d(-P(2,1),P(1,1))\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend",
+    "mPath": "materiales/semana2/Agilus_C4.m",
+    "images": []
+  },
+  {
+    "id": "semana2/Cinemática_manipuladores (1).pdf",
+    "week": 2,
+    "name": "Cinemática_manipuladores (1).pdf",
+    "path": "materiales/semana2/Cinemática_manipuladores (1).pdf",
+    "type": "pdf",
+    "pages": [
+      "materiales/semana2/Cinemática_manipuladores (1)_page01.webp",
+      "materiales/semana2/Cinemática_manipuladores (1)_page02.webp",
+      "materiales/semana2/Cinemática_manipuladores (1)_page03.webp",
+      "materiales/semana2/Cinemática_manipuladores (1)_page04.webp",
+      "materiales/semana2/Cinemática_manipuladores (1)_page05.webp"
+    ]
+  },
+  {
+    "id": "semana2/Clase_1_RI.pdf",
+    "week": 2,
+    "name": "Clase_1_RI.pdf",
+    "path": "materiales/semana2/Clase_1_RI.pdf",
+    "type": "pdf",
+    "pages": [
+      "materiales/semana2/Clase_1_RI_page01.webp",
+      "materiales/semana2/Clase_1_RI_page02.webp",
+      "materiales/semana2/Clase_1_RI_page03.webp",
+      "materiales/semana2/Clase_1_RI_page04.webp"
+    ]
+  },
+  {
+    "id": "semana2/DHL.mlx",
+    "week": 2,
+    "name": "DHL.mlx",
+    "path": "materiales/semana2/DHL.mlx",
+    "type": "mlx",
+    "code": "function M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend",
+    "mPath": "materiales/semana2/DHL.m",
+    "images": []
+  },
+  {
+    "id": "semana2/DHL_VTL_901S.mlx",
+    "week": 2,
+    "name": "DHL_VTL_901S.mlx",
+    "path": "materiales/semana2/DHL_VTL_901S.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n\nL1 = 412;\nL2 = 100;\nL3 = 420;\nL4 = 400;\nL5 = 80;\n\ntheta1 = input('Ingrese valor de theta1: ');\ntheta2 = input('Ingrese valor de theta2: ');\ntheta3 = input('Ingrese valor de theta3: ');\ntheta4 = input('Ingrese valor de theta4: ');\ntheta5 = input('Ingrese valor de theta5: ');\ntheta6 = input('Ingrese valor de theta6: ');\n\ntheta1 = deg2rad(theta1);\ntheta2 = deg2rad(theta2);\ntheta3 = deg2rad(theta3);\ntheta4 = deg2rad(theta4);\ntheta5 = deg2rad(theta5);\ntheta6 = deg2rad(theta6);\n\nM01 = DHL(theta1 + pi/2,L1,L2,90);\nM12 = DHL(theta2 + pi/2,0,L3,0);\nM23 = DHL(theta3,0,0,-90);\nM34 = DHL(theta4,-L4,0,90);\nM45 = DHL(theta5,0,0,-90);\nM56 = DHL(theta6,-L5,0,180);\n\nM06 = M01*M12*M23*M34*M45*M56\neuler = rad2deg(tform2eul(M06))\n\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend\n\n\n",
+    "mPath": "materiales/semana2/DHL_VTL_901S.m",
+    "images": []
+  },
+  {
+    "id": "semana2/T3_401S_DH.mlx",
+    "week": 2,
+    "name": "T3_401S_DH.mlx",
+    "path": "materiales/semana2/T3_401S_DH.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n\n% syms theta1 theta2 d3 theta4\n% syms L1 L2\n%%% Valores_Articulares %%%\ntheta1 = input('Ingrese valor de theta1: ')\ntheta2 = input('Ingrese valor de theta2: ')\nd3 = input('Ingrese valor de d3(Negativo): ')\ntheta4 = input('Ingrese el valor de theta4: ')\n\n%%% Datos %%%\nL1 = 225;\nL2 = 175;\n\n%%% Tabla_DH %%%\n\n\n%%% Conversión_Grados ---> Radianes %%%\n% tic\ntheta1 = deg2rad(theta1);\ntheta2 = deg2rad(theta2);\ntheta4 = deg2rad(theta4);\n\n%%% Implementación_de_DH %%%\nM01 = DHL(theta1,0,L1,0);\nM12 = DHL(theta2,0,L2,0);\nM23 = DHL(0,d3,0,0);\nM34 = DHL(theta4,0,0,0);\n\nM04 = M01*M12*M23*M34\n\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend\n\n",
+    "mPath": "materiales/semana2/T3_401S_DH.m",
+    "images": [
+      "materiales/semana2/T3_401S_DH_image1.png"
+    ]
+  },
+  {
+    "id": "semana3/Cin_Inv_Robot_T3_401S_4GDL.mlx",
+    "week": 3,
+    "name": "Cin_Inv_Robot_T3_401S_4GDL.mlx",
+    "path": "materiales/semana3/Cin_Inv_Robot_T3_401S_4GDL.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n%%%% SCARA_T3-401S %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n%%%% Cinemática_Directa %%%%%%%%%%%%%%%%%\n\nL1 = 225;\nL2 = 175;\n\ntheta1 = input('Ingrese valor de theta1: ')\ntheta2 = input('Ingrese valor de theta2: ')\nd3 = input('Ingrese valor de d3 (Negativo): ')\ntheta4 = input('Ingrese valor de theta4: ')\n\ntheta1 = deg2rad(theta1);\ntheta2 = deg2rad(theta2);\ntheta4 = deg2rad(theta4);\n\nM01 = DHL(theta1,0,L1,0);\nM12 = DHL(theta2,0,L2,0);\nM23 = DHL(0,d3,0,0);\nM34 = DHL(theta4,0,0,0);\n\nM04 = M01*M12*M23*M34;\n\nEuler = tform2eul(M04);\nEuler_z = rad2deg(Euler(1,1));\n\n\n%%% Cinemática_Inversa %%%%%%%%%%%%%%%%\n\npx = M04(1,4);\npy = M04(2,4);\npz = M04(3,4);\n\n%%% Theta_2 %%%%%%%%%%%%%\n\nd = sqrt(px^2 + py^2);\nD2 = (d^2 - L1^2 - L2^2)/(2*L1*L2);\nS2p = sqrt(1 - D2^2);\nS2n = -sqrt(1 - D2^2);\n\ntheta_2p = atan2(S2p,D2);\ntheta_2p = rad2deg(theta_2p);\n\ntheta_2n = atan2d(S2n,D2);\n\n%%% Theta_1 %%%%%%%%%%%%%%\n\nbeta = atan2(py,px);\nDa = (L1^2 + d^2 - L2^2)/(2*L1*d);\nSap = sqrt(1 - Da^2);\nSan = -sqrt(1 - Da^2);\nalphap = atan2(Sap,Da);\nalphan = atan2(San,Da);\n\ntheta_1p = rad2deg(beta - alphap);\ntheta_1n = rad2deg(beta - alphan);\n\n%%% d3 %%%%%%%%%%%%%%%%%%%\n\nd3 = pz;\n\n%%% Theta_4 %%%%%%%%%%%%%%%%%%%%%%%\nsyms theta44\n\nM344 = DHL(theta44,0,0,0)\n\nR03 = M01(1:3,1:3)*M12(1:3,1:3)*M23(1:3,1:3);\n% th4 = R03'*M04(1:3,1:3)\nth4 = R03'*(rotz(Euler_z))\ntheta_4 = atan2d(th4(2,1),th4(1,1));\n\n%%%%% Resultados %%%%%%%%%%%%%%%%%%%%\n\ntheta_11p = theta_1p\ntheta_11n = theta_1n\ntheta_22p = theta_2p\ntheta_22n = theta_2n\nd_3 = d3\ntheta_44 = theta_4\n\n\n\n",
+    "mPath": "materiales/semana3/Cin_Inv_Robot_T3_401S_4GDL.m",
+    "images": [
+      "materiales/semana3/Cin_Inv_Robot_T3_401S_4GDL_image1.png"
+    ]
+  },
+  {
+    "id": "semana3/Cinemática_inversa_de_manipuladores (1).pdf",
+    "week": 3,
+    "name": "Cinemática_inversa_de_manipuladores (1).pdf",
+    "path": "materiales/semana3/Cinemática_inversa_de_manipuladores (1).pdf",
+    "type": "pdf",
+    "pages": [
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page01.webp",
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page02.webp",
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page03.webp",
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page04.webp",
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page05.webp",
+      "materiales/semana3/Cinemática_inversa_de_manipuladores (1)_page06.webp"
+    ]
+  },
+  {
+    "id": "semana4/Cinematica_Inversa_VT6L_901S.mlx",
+    "week": 4,
+    "name": "Cinematica_Inversa_VT6L_901S.mlx",
+    "path": "materiales/semana4/Cinematica_Inversa_VT6L_901S.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n\nL1 = 412;\nL2 = 100;\nL3 = 420;\nL4 = 400;\nL5 = 80;\n\n%%% Datos_proporcionados_por_el_simulador %%%%%\npx = input('Ingrese el valor de px: ')\npy = input('Ingrese el valor de py: ')\npz = input('Ingrese el valor de pz: ')\n\nang_z = input('Ingrese el valor de ang_z: ')\nang_y = input('Ingrese el valor de ang_y: ')\nang_x = input('Ingrese el valor de ang_x: ')\n\nR = rotz(ang_z)*roty(ang_y)*rotx(ang_x);\n\n%%% Posición_de_la_muñeca %%%%%%%\nax = R(1,3);\nay = R(2,3);\naz = R(3,3);\n\npmx = px - L5*ax;\npmy = py - L5*ay;\npmz = pz - L5*az;\n\nrm = sqrt(pmx^2 + pmy^2);\nd = sqrt((pmz - L1)^2 + (rm - L2)^2);\n\n%%%% Theta_1 %%%%%%%%%%%%\ntheta1 = atan2d(-pmx,pmy)\ntheta11 = deg2rad(theta1);\n\n%%%% Theta_2 %%%%%%%%%%%%%\nalpha = atan2d(pmz - L1, rm - L2);\ncbeta = (L3^2 + d^2 - L4^2)/(2*L3*d);\nsbeta = sqrt(1 - cbeta^2);\n\nbeta = atan2d(sbeta,cbeta);\ntheta2 = beta - 90 + alpha\ntheta22 = deg2rad(theta2);\n\n%%% Theta_3 %%%%%%%%%%%%%%%\ncgamma = (L4^2 + L3^2 - d^2)/(2*L4*L3);\nsgamma = sqrt(1 - cgamma^2);\ngamma = atan2d(sgamma,cgamma);\ntheta3 = gamma - 90\ntheta33 = deg2rad(theta3);\n\n%%% Orientación %%%%%%\nsyms theta44 theta55 theta66\n\nT01 = DHL(theta11 + pi/2,L1,L2,90);        \nT12 = DHL(theta22 + pi/2,0,L3,0);\nT23 = DHL(theta33,0,0,-90);\nT34 = DHL(theta44,-L4,0,90);\nT45 = DHL(theta55,0,0,-90);\nT56 = DHL(theta66,-L5,0,180);\n\n\n%%% Matriz Literal %%%%%%%%%%%%%\nM366 = simplify(T34*T45*T56);\nM366_r = M366(1:3,1:3)\n\n%%% Matriz Numérica %%%%%\nM033 = T01*T12*T23;\nR03 = M033(1:3,1:3);\nR30 = R03.'; %%% Inversa de R03\n\nR336 = R30*R\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\ntheta4 = atan2(R336(2,3),R336(1,3));\ntheta4 = rad2deg(theta4)\n\ntheta5 = atan2(sqrt(1-(R336(3,3)^2)),-R336(3,3));\ntheta5 = rad2deg(theta5)\n\ntheta6 = atan2(R336(3,2),R336(3,1));\ntheta6 = rad2deg(theta6)\n\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend\n\n",
+    "mPath": "materiales/semana4/Cinematica_Inversa_VT6L_901S.m",
+    "images": []
+  },
+  {
+    "id": "semana5/Agilus_C4_DH_Jacobiano.mlx",
+    "week": 5,
+    "name": "Agilus_C4_DH_Jacobiano.mlx",
+    "path": "materiales/semana5/Agilus_C4_DH_Jacobiano.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\nsyms theta1 theta2 theta3 theta4 theta5 theta6\nsyms L1 L2 L3 L4 L5\n\n%%% Algoritmo_DH %%%\n\nM01 = DHL(-theta1,L1,0,-90);\nM12 = DHL(theta2,0,L2,0);\nM23 = DHL(theta3 - pi/2,0,L3,90);\nM34 = DHL(theta4,-L4,0,-90);\nM45 = DHL(theta5,0,0,90);\nM56 = DHL(theta6+pi,-L5,0,180);\n\nM06 = simplify(M01*M12*M23*M34*M45*M56);\n\n%%% Jacobiano_Lineal %%%\ntheta = [theta1 theta2 theta3 theta4 theta5 theta6];\nPos = M06(1:3,4);\nJL = simplify(jacobian(Pos,theta))\n%%% Jacobiano_Angular %%%\nz0 = [0\n      0\n      1];\n\nR01 = M01(1:3,1:3);\nz1 = R01(1:3,3);\n\nM02 = M01*M12;\nR02 = M02(1:3,1:3);\nz2 = R02(1:3,3);\n\nM03 = M01*M12*M23;\nR03 = M03(1:3,1:3);\nz3 = R03(1:3,3);\n\nM04 = M03*M34;\nR04 = M04(1:3,1:3);\nz4 = R04(1:3,3);\n\nM05 = M04*M45;\nR05 = M05(1:3,1:3);\nz5 = R05(1:3,3);\n\nJw = [z0 z1 z2 z3 z4 z5];\n\nJ = [JL\n     Jw]\ntheta1 = pi/8;\ntheta2 = pi/3;\ntheta3 = pi/7;\ntheta4 = pi/10;\ntheta5 = pi/9;\ntheta6 = pi/6;\n\nqp = [pi/12\n      pi/3\n      pi/5\n      pi/8\n      pi/6\n      pi/15];\n\nL1 = 330;\nL2 = 290;\nL3 = 20;\nL4 = 310;\nL5 = 75;\n\nJJ = eval(J)\nveloc = JJ*qp\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend",
+    "mPath": "materiales/semana5/Agilus_C4_DH_Jacobiano.m",
+    "images": []
+  },
+  {
+    "id": "semana5/Clase_5_2026_2_Introducción_Jacobianos.pdf",
+    "week": 5,
+    "name": "Clase_5_2026_2_Introducción_Jacobianos.pdf",
+    "path": "materiales/semana5/Clase_5_2026_2_Introducción_Jacobianos.pdf",
+    "type": "pdf",
+    "pages": [
+      "materiales/semana5/Clase_5_2026_2_Introducción_Jacobianos_page01.webp",
+      "materiales/semana5/Clase_5_2026_2_Introducción_Jacobianos_page02.webp"
+    ]
+  },
+  {
+    "id": "semana5/T3_401S_DH_Jacobiano.mlx",
+    "week": 5,
+    "name": "T3_401S_DH_Jacobiano.mlx",
+    "path": "materiales/semana5/T3_401S_DH_Jacobiano.mlx",
+    "type": "mlx",
+    "code": "clc\nclear\n\nsyms theta1 theta2 d3 theta4\nsyms L1 L2\n%%% Tabla_DH %%%\n\n%%% Implementación_de_DH %%%\nM01 = DHL(theta1,0,L1,0);\nM12 = DHL(theta2,0,L2,0);\nM23 = DHL(0,-d3,0,0);\nM34 = DHL(theta4,0,0,0);\n\nM04 = simplify(M01*M12*M23*M34)\n%%% Jacobiano_Lineal %%%\nPos = [M04(1,4)\n       M04(2,4)\n       M04(3,4)];\n\ntheta = [theta1 theta2 d3 theta4];\n\nJ = jacobian(Pos,theta)\n%%% Jacobiano_Angular %%%\nz0 = [0\n      0\n      1];\n\nR01 = M01(1:3,1:3);\nz1 = R01(1:3,3);\n\nz2 = [0\n      0\n      0];\n\nM03 = M01*M12*M23;\nR03 = M03(1:3,1:3);\nz3 = R03(1:3,3);\n\nJw = [z0 z1 z2 z3];\n\nJ = [J\n     Jw]\n\n\n\nfunction M=DHL(theta,d,a,alpha)\n\nMrot_z = [cos(theta) -sin(theta) 0 0\n          sin(theta)  cos(theta) 0 0\n          0           0          1 0\n          0           0          0 1];\n\ntransl = [1 0 0 a\n          0 1 0 0\n          0 0 1 d\n          0 0 0 1];\nMrot_x = [rotx(alpha) [0;0;0]\n          0 0 0        1];\n\nM=Mrot_z*transl*Mrot_x;\nend\n\n",
+    "mPath": "materiales/semana5/T3_401S_DH_Jacobiano.m",
+    "images": [
+      "materiales/semana5/T3_401S_DH_Jacobiano_image1.png"
+    ]
+  }
+]
