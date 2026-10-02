@@ -1,6 +1,6 @@
 # Revisión de Robótica Industrial para Astra
 
-Ultima modificacion: 2026-10-02 10:38:46 -05
+Ultima modificacion: 2026-10-02 10:42:35 -05
 
 ## Objetivo
 
@@ -26,7 +26,7 @@ Revisar la exactitud matemática y didáctica de la web implementada en este pro
 
 ## Alcance entregado
 
-Los tres robots tienen directa, animación y jacobiano. Solo SCARA tiene inversa interactiva. La web es estática y se publica en GitHub Pages. El tutor IA se excluye por petición del usuario. Los scripts originales siguen sin animación; la simulación MATLAB adicional es independiente.
+Los tres robots tienen directa, animación y jacobiano. Solo SCARA tiene inversa interactiva. La web es estática y se publica en GitHub Pages desde la rama `gh-pages` compilada localmente. El workflow personalizado de Actions no arrancó por un bloqueo de facturación; se conserva como alternativa manual. `npm run deploy:pages` actualiza la rama publicada. El tutor IA se excluye por petición del usuario. Los scripts originales siguen sin animación; la simulación MATLAB adicional es independiente.
 
 ## Validar
 

@@ -1,6 +1,6 @@
 # Robótica Industrial · Laboratorio
 
-Ultima modificacion: 2026-10-02 10:38:46 -05
+Ultima modificacion: 2026-10-02 10:42:35 -05
 
 Web de aprendizaje basada en los materiales originales de las semanas 2 a 5.
 
@@ -32,11 +32,21 @@ npm test
 npm run build
 ```
 
-`npm run materials` vuelve a copiar los originales y extrae código/figuras desde los `.mlx`; no modifica los archivos fuente.
+`npm run materials` requiere Python con Pillow y Poppler (`pdftoppm`). Genera páginas WebP para el visor y vuelve a copiar los originales y extrae código/figuras desde los `.mlx`; no modifica los archivos fuente.
 
 ## Publicación
 
-GitHub Actions prueba y compila en cada push a `main`, y publica `dist` en GitHub Pages.
+La publicación actual utiliza la rama `gh-pages` con el sitio compilado localmente. Esta vía evita la compilación personalizada de Actions, bloqueada por un problema de facturación de la cuenta. GitHub procesa después el despliegue nativo de Pages.
+
+Para actualizar la web, después de guardar y subir los cambios de `main`:
+
+```bash
+npm run deploy:pages
+```
+
+El comando ejecuta las pruebas, compila y actualiza solo los archivos generados en una copia temporal de `gh-pages`, sin reescribir su historia. Comprobar el estado final de Pages antes de dar una actualización por publicada.
+
+Se conserva un workflow manual alternativo; para usarlo una vez resuelto el acceso a Actions, cambiar Pages a publicación mediante GitHub Actions.
 `GITHUB_PAGES=true` establece `/robotica-industrial-lab/` como ruta base. Para otro nombre de repositorio, actualizar `vite.config.js` y `REPO` en `src/main.jsx`.
 
 ## MATLAB Online

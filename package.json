@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --test tests/kinematics.test.js",
-    "materials": "python scripts/extract_materials.py"
+    "materials": "python scripts/extract_materials.py",
+    "deploy:pages": "python scripts/publish_pages.py"
   },
   "dependencies": {
     "react": "^19.1.1",
